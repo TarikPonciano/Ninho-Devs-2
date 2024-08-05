@@ -3,29 +3,32 @@ import mysql.connector
 host = "localhost"
 user = "root"
 password = "mysql"
-database = "escola"
+database = "escol"
 
-conexaoBD = mysql.connector.connect(host = host, user = user, password = password, database = database)
+conexaoBD = None
+cursor = None
+try:
+    conexaoBD = mysql.connector.connect(host = host, user = user, password = password, database = database)
 
-print("Conexão Estabelecida!")
-
-cursor = conexaoBD.cursor()
-
-cursor.execute("SELECT VERSION()")
-
-resultado = cursor.fetchall()
-
-print(f"A VERSÃO DO MYSQL É {resultado[0][0]}")
-
-cursor.execute("SELECT * FROM aluno")
-resultado = cursor.fetchall()
-
-for aluno in resultado:
-    print(f"{aluno[0]}. {aluno[2]}")
+    print("Conexão Estabelecida!")
+    cursor = conexaoBD.cursor()
     
-cursor.execute("Insert into aluno values (default, '12345999', 'Novo Aluno', default, default, 99, default)")
+    cursor.execute("asdasdasd")
+    #OPERAÇÕES SQL
+    
+    matricula = int(input("Digite a matricula:"))
+    
+    f"SELECT * FROM aluno WHERE matriculaaluno = {matricula}"
 
-print("Aluno inserido com sucesso!")
+    
+except mysql.connector.Error as e:
+    print(e.msg)
+    
+finally:
+    if cursor:
+        cursor.close()
+    if conexaoBD:
+        conexaoBD.close()
+    
 
-conexaoBD.commit()
-
+#Faça um programa que se conecta ao banco de dados escola, realiza uma consulta e mostra na tela todos os alunos no formato "<matricula>. <nome>" e na sequência pede que o usuário escreva a matricula e mostra na tela as informações do aluno da matricula especificada.
