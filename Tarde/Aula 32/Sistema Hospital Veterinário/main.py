@@ -7,7 +7,6 @@ from conexao import Conexao
 # 3. Alterar cadastro de paciente
 # 4. Remover paciente
 # 0. Sair
-
 conexaoBD = Conexao("localhost", "root", "mysql", "hospitalvet")
 
 while True:
@@ -28,7 +27,23 @@ while True:
     op = input("Digite a opção do menu desejada:")
     
     if (op == "1"):
-                  
+        print("Ver Pacientes")
+        
+        pacientes = conexaoBD.consultar("SELECT * FROM paciente")
+        
+        if pacientes == []:
+            print("Não foi possível acessar os pacientes.")
+        else:
+            print(pacientes)
+            
+            idPaciente = int(input("Digite o id do paciente desejado:"))
+            
+            pacienteEspecifico = conexaoBD.consultarComParametros("SELECT * FROM paciente WHERE id_paciente = %s", (idPaciente,))
+            
+            if pacienteEspecifico == []:
+                print("Paciente não encontrado!")
+            else:
+                print(pacienteEspecifico)                  
     elif (op == "2"):
         pass
     elif (op=="3"):
