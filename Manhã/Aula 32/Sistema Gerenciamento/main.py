@@ -1,4 +1,5 @@
 import mysql.connector
+from Conexao import Conexao
 # Crie um programa de gerenciamento de um hospital veterinário. Esse programa deve conter um menu no formato:
 
 # 1. Ver pacientes
@@ -6,6 +7,7 @@ import mysql.connector
 # 3. Alterar cadastro de paciente
 # 4. Remover paciente
 # 0. Sair
+conexaoBD = Conexao("localhost", "root", "mysql", "hospitalvet")
 
 while True:
     
@@ -24,107 +26,48 @@ while True:
     op = input("Digite a opção do menu desejada: ")
     
     if (op == "1"):
-        host = "localhost"
-        user = "root"
-        password = "mysql"
-        database = "hospitalvet"
+        #Imprimir todos os pacientes no formato
         
-        con = None
-        cursor = None
-        pacientes = []
+        #ID | Nome | Espécie | Tutor | Peso
         
-        try:
-            con = mysql.connector.connect(host=host, user=user, password=password, database=database)
-            cursor = con.cursor()
-            
-            cursor.execute("SELECT * FROM paciente")
-            pacientes = cursor.fetchall()
-            
-        except mysql.connector.Error as e:
-            #O que fazer/imprimir em caso de erro
-            print("Erro de SQL:", e)
-        except Exception as e:
-            #O que fazer/imprimir em caso de erro
-            print("Erro:", e)
-        finally:
-            #Fechar conexão e cursor
-            if cursor!= None:
-                cursor.close()
-            if con != None and con.is_connected():
-                con.close()
-                
-        print("ID | NOME | ESPÉCIE | TUTOR | PESO")
-            
+        pacientes = conexaoBD.consultar("Select * from paciente")
+        
+        print("ID | Nome | Espécie | Tutor | Peso")
+        
         for paciente in pacientes:
+            
             print(f"{paciente[0]} | {paciente[1]} | {paciente[2]} | {paciente[3]} | {paciente[4]}")
-        
-        
-        
-        # Escolher um paciente pelo id
-        idPaciente = 0
-                
+            
         try:    
-            idPaciente = int(input("Digite o id do paciente que deseja ver mais detalhes: "))
+            idPaciente = int(input("Digite o id do paciente escolhido:"))
         except Exception as e:
-            print("Você digitou um id inválido!")
+            print("Erro:",e)
+            idPaciente = 0
             
         if idPaciente == 0:
-            print("Finalizando consulta!")
+            print("Encerrando Operação")
         else:
-            host = "localhost"
-            user = "root"
-            password = "mysql"
-            database = "hospitalvet"
+            pacienteEscolhido = conexaoBD.consultarComParametro("SELECT * FROM paciente WHERE id_paciente = %s", (idPaciente,))
             
-            con = None
-            cursor = None
-            pacienteEscolhido = None
-            
-            try:
-                con = mysql.connector.connect(host=host, user=user, password=password, database=database)
-                cursor = con.cursor()
-                
-                cursor.execute("SELECT * FROM paciente WHERE id_paciente = %s", (idPaciente,))
-                pacienteEscolhido = cursor.fetchall()
-                
-            except mysql.connector.Error as e:
-                #O que fazer/imprimir em caso de erro
-                print("Erro de SQL:", e)
-            except Exception as e:
-                #O que fazer/imprimir em caso de erro
-                print("Erro:", e)
-            finally:
-                #Fechar conexão e cursor
-                if cursor!= None:
-                    cursor.close()
-                if con != None and con.is_connected():
-                    con.close()
-                    
-            print(pacienteEscolhido) 
-            
-            #Imprima as informações do paciente no formato:
-            
-            #Id:
-            #Nome:
-            #Espécie:
-            #Tutor:
-            #Peso:
-            
-            #Lógica apenas com lista
-            # pacienteEscolhido = None
-            # for paciente in pacientes:
-            #     if paciente[0] == idPaciente:
-            #         pacienteEscolhido = paciente
-            #         break
-                
-            # if pacienteEscolhido == None:
-            #     print("Paciente não encontrado")
-            # else:
-            #     print(pacienteEscolhido)
-            
+            if pacienteEscolhido == []:
+                print("Paciente não encontrado!")
+            else:
+                print(f'''
+        ID: {pacienteEscolhido[0][0]}
+        Nome: {pacienteEscolhido[0][1]}
+        Espécie: {pacienteEscolhido[0][2]}
+        Tutor: {pacienteEscolhido[0][3]}
+        Peso: {pacienteEscolhido[0][4]} kg
+                      ''')
+    
+        #Imprima as informações do paciente no formato:
         
+        #Id:
+        #Nome:
+        #Espécie:
+        #Tutor:
+        #Peso:
         
-            
         
     elif (op == "2"):
         pass
