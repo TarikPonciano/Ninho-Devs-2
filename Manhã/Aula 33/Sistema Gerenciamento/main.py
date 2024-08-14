@@ -7,6 +7,14 @@ from Conexao import Conexao
 # 3. Alterar cadastro de paciente
 # 4. Remover paciente
 # 0. Sair
+
+def verPacientes():
+    pacientes = conexaoBD.consultar("SELECT * FROM paciente")
+    print("ID | Nome | Espécie | Tutor | Peso")
+    for paciente in pacientes:
+        print(f"{paciente[0]} | {paciente[1]} | {paciente[2]} | {paciente[3]} | {paciente[4]}")
+
+
 conexaoBD = Conexao("localhost", "root", "mysql", "hospitalvet")
 
 while True:
@@ -88,7 +96,63 @@ while True:
         
         
     elif (op == "3"):
-        pass
+        #Exibir a lista de pacientes na tela
+        verPacientes()
+        #Pedir o id de um paciente específico para o usuário
+        try:
+            idPaciente = int(input("Digite o id do paciente que deseja alterar:"))
+        except Exception as e:
+            print("Erro:", e)
+            idPaciente = 0
+            
+        if idPaciente == 0:
+            print("Operação Cancelada!")
+        else:
+            #Exibir as informações do paciente na tela
+            pacienteEscolhido = conexaoBD.consultarComParametro("SELECT * FROM paciente WHERE id_paciente = %s", (idPaciente,))
+            
+            if pacienteEscolhido == []:
+                print("Paciente não encontrado")
+            else:
+                print(f'''
+    ID: {pacienteEscolhido[0][0]}                  
+    Nome: {pacienteEscolhido[0][1]}
+    Espécie: {pacienteEscolhido[0][2]}
+    Tutor: {pacienteEscolhido[0][3]}
+    Peso: {pacienteEscolhido[0][4]}kg                  
+                      ''')
+                nome = pacienteEscolhido[0][1]
+                especie = pacienteEscolhido[0][2]
+                tutor = pacienteEscolhido[0][3]
+                peso = pacienteEscolhido[0][4]
+                
+                #Pedir as novas informações do paciente (nome, especie, tutor, peso)
+                novoNome = input("Digite o novo nome:")
+                if (novoNome == ""):
+                    novoNome = nome
+                novaEspecie = input("Digite a nova espécie:")
+                if (novaEspecie == ""):
+                    novaEspecie = especie
+                novoTutor = int(input("Digite o novo tutor:"))
+                if (novoTutor == 0):
+                    novoTutor = tutor
+                novoPeso = float(input("Digite o novo peso:"))
+                if novoPeso == 0:
+                    novoPeso = peso
+                #Enviar as novas informações através de manipulação UPDATE
+                sql = '''
+                UPDATE paciente
+                SET
+                nome_paciente = %s,
+                especie_paciente = %s,
+                id_tutor = %s,
+                peso_paciente = %s
+                WHERE
+                id_paciente = %s;
+                '''
+                conexaoBD.manipularComParametro(sql, (novoNome, novaEspecie, novoTutor, novoPeso, idPaciente))
+                print("Paciente atualizado com sucesso!")
+    
     elif (op == "4"):
         
         # Exibir a lista de pacientes na tela
