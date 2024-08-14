@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector #pip install mysql-connector-python
 from Conexao import Conexao
 # Crie um programa de gerenciamento de um hospital veterinário. Esse programa deve conter um menu no formato:
 
