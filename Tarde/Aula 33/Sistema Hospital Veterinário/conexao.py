@@ -69,7 +69,33 @@ class Conexao:
         
         self.desconectar()
         return resultado    
+    
+    def manipular(self, sql):
+        self.conectar() 
+        
+        try:
+            self._cursor.execute(sql)
+            self._con.commit()
+        except mysql.connector.Error as e:
+            print("Erro de SQL:", e)
+        except Exception as e:
+            print("Erro:", e)
+        
+        self.desconectar()
+    
+    #Criar o manipular com parâmetros
+    def manipularComParametros(self, sql, parametros):
+        self.conectar()
+        
+        try:
+            self._cursor.execute(sql, parametros)
+            self._con.commit()
+        except mysql.connector.Error as e:
+            print("Erro de SQL:", e)
+        except Exception as e:
+            print("Erro:", e)
             
+        self.desconectar()
                     
 if __name__ == "__main__":
     conexaoBD = Conexao("localhost", "root", "mysql", "hospitalvet")
