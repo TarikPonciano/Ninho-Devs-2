@@ -90,6 +90,47 @@ while True:
     elif (op == "3"):
         pass
     elif (op == "4"):
+        
+        # Exibir a lista de pacientes na tela
+        pacientes = conexaoBD.consultar("SELECT * FROM paciente")
+        print("ID | Nome | Espécie | Tutor | Peso")
+        for paciente in pacientes:
+            print(f"{paciente[0]} | {paciente[1]} | {paciente[2]} | {paciente[3]} | {paciente[4]}")
+        
+        # Pedir para a pessoa selecionar um paciente pelo id
+        
+        try:
+            idPaciente = int(input("Digite o id do paciente que deseja remover: "))
+        except Exception as e:
+            print("Erro:",e)
+            idPaciente = 0
+        
+        if idPaciente == 0:
+            print("Operação Cancelada!")    
+        # Exibir as informações do paciente mostrado na tela
+        else:        
+            pacienteEscolhido = conexaoBD.consultarComParametro("SELECT * FROM paciente WHERE id_paciente = %s", (idPaciente,))
+            
+            if (pacienteEscolhido == []):
+                print("Paciente não encontrado!")
+            else:
+                print(f'''
+            ID: {pacienteEscolhido[0][0]}          
+            Nome: {pacienteEscolhido[0][1]}          
+            Espécie: {pacienteEscolhido[0][2]}
+            Tutor: {pacienteEscolhido[0][3]}
+            Peso: {pacienteEscolhido[0][4]}''')
+        
+        # Perguntar se a pessoa deseja remover o paciente
+            confirmacao = input("Confirme se deseja remover o paciente (sim/não):")
+        
+        # Se sim, realizar uma manipulação do tipo DELETE para remover o paciente do banco 
+            if (confirmacao == "sim"):
+                conexaoBD.manipularComParametro("DELETE FROM paciente WHERE id_paciente = %s",(idPaciente,))
+                print("Paciente removido com sucesso!")
+            else:
+                print("Operação Cancelada")
+        
         pass
     elif (op == "0"):
         break
