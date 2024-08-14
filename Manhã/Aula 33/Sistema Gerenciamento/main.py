@@ -37,7 +37,8 @@ while True:
         for paciente in pacientes:
             
             print(f"{paciente[0]} | {paciente[1]} | {paciente[2]} | {paciente[3]} | {paciente[4]}")
-            
+        
+        
         try:    
             idPaciente = int(input("Digite o id do paciente escolhido:"))
         except Exception as e:
@@ -70,7 +71,22 @@ while True:
         
         
     elif (op == "2"):
-        pass
+        print("Cadastro de Paciente")
+        
+        nome = input("Digite o nome:")
+        especie = input("Digite a especie:")
+        tutor = int(input("Digite o tutor:"))
+        peso = float(input("Digite o peso em kg:"))
+        
+        sql = '''
+        INSERT INTO paciente VALUES (DEFAULT, %s, %s, %s, %s);
+        '''
+    
+        conexaoBD.manipularComParametro(sql, (nome, especie, tutor, peso))
+        
+        print("Paciente cadastrado com sucesso!")
+        
+        
     elif (op == "3"):
         pass
     elif (op == "4"):
