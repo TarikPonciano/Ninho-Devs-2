@@ -41,7 +41,7 @@ while True:
         #   - Validar se o produto existe no banco
         # Pedir a quantidade de cada produto
         # Criar a venda
-        # Registrar os itens da vendas
+        # Registrar os itens da venda
         # Atualizar o estoque dos produtos
         # Atualizar a venda com seu valor total
         # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
