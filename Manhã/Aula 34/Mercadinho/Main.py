@@ -36,6 +36,15 @@ while True:
     if (menu == "1"):
         verProdutos()
     elif (menu == "2"):
+        # Exibir a tabela de produtos 
+        # Escolher os ids dos produtos que serão comprados.
+        #   - Validar se o produto existe no banco
+        # Pedir a quantidade de cada produto
+        # Criar a venda
+        # Registrar os itens da vendas
+        # Atualizar o estoque dos produtos
+        # Atualizar a venda com seu valor total
+        # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
         pass
     elif (menu == "0"):
         print("Saindo do programa...")
