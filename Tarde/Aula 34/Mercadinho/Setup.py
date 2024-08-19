@@ -19,9 +19,9 @@ conexaoBD.manipular('''
     );
                     ''')
 
-#Criar tabela venda
+#Criar tabela vendas
 #   - No atributo data da venda, guardar o momento da venda (Data e hora)
-#Criar tabela item
+#Criar tabela itens
 #   - Cadastrar as chaves estrangeiras
 
-#Inserir dados iniciais da tabela Produtos
+#Inserir dados iniciais da tabela Produtos (10 produtos)
