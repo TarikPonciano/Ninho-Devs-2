@@ -97,26 +97,6 @@ class Conexao:
             
         self.desconectar()
                     
-if __name__ == "__main__":
-    conexaoBD = Conexao("localhost", "root", "mysql", "hospitalvet")
-    #Ver todos os pacientes
-    
-    pacientes = conexaoBD.consultar("SELECT * FROM paciente")
-    
-    if pacientes == []:
-        print("Não foram encontrados pacientes")
-    else:
-        print("ID | NOME | TUTOR | ESPÉCIE | PESO ")
-        for paciente in pacientes:
-            print(f"{paciente[0]} | {paciente[1]} | {paciente[2]} | {paciente[3]} | {paciente[4]}")
-            
-        idPaciente = int(input("Digite um id específico:"))
-        
-        pacienteEspecifico = conexaoBD.consultarComParametro("SELECT * FROM paciente WHERE id_paciente = %s", (idPaciente,))
-        print(pacienteEspecifico)
-    
-    
-    
     
     
     
