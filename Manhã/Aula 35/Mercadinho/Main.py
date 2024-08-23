@@ -70,8 +70,13 @@ while True:
                 print("Insira uma quantidade adequada.")
             
         # Criar a venda (Inserir uma venda)
-        conexaoBD.manipular("INSERT INTO vendas VALUES(DEFAULT, DEFAULT, DEFAULT)")
+        conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
+        id = conexaoBD._cursor.lastrowid
+        
+        # id = conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
+            
         # Registrar os itens da venda (Descobrir o id da venda)
+        
         
         # Atualizar o estoque dos produtos
         # Atualizar a venda com seu valor total
