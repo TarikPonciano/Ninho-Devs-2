@@ -83,9 +83,11 @@ while True:
             
         
         # Criar a venda (Inserir Venda)
-        
+        conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
         
         # Criar os registros de venda dos produtos (Inserir na tabela itens)
+        
+        # Descobrir o id da venda
         
         # Atualizar a quantidade de produto na tabela produto
         # Atualiza a compra com o Valor Total da compra    
