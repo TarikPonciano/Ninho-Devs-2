@@ -59,7 +59,16 @@ while True:
                 print(produto)
                 break
         # Pedir a quantidade de cada produto
-        #   - Validar se a quantidade é possível
+        while (True):
+            quantidadeProduto = int(input("Digite a quantidade do produto:"))
+            #   - Validar se a quantidade é possível
+            quantidadeDisponivel = produto[3]
+            if (quantidadeDisponivel>=quantidadeProduto and quantidadeProduto>0):
+                print("Produto adicionado ao carrinho!")
+                break
+            else:
+                print("Insira uma quantidade adequada.")
+            
         # Criar a venda
         # Registrar os itens da venda
         # Atualizar o estoque dos produtos
