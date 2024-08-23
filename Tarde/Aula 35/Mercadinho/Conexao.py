@@ -72,9 +72,10 @@ class Conexao:
     
     def manipular(self, sql):
         self.conectar() 
-        
+        resultado = 0
         try:
             self._cursor.execute(sql)
+            resultado = self._cursor.lastrowid
             self._con.commit()
         except mysql.connector.Error as e:
             print("Erro de SQL:", e)
@@ -82,13 +83,15 @@ class Conexao:
             print("Erro:", e)
         
         self.desconectar()
+        return resultado
     
     #Criar o manipular com parâmetros
     def manipularComParametros(self, sql, parametros):
         self.conectar()
-        
+        resultado = 0
         try:
             self._cursor.execute(sql, parametros)
+            resultado = self._cursor.lastrowid
             self._con.commit()
         except mysql.connector.Error as e:
             print("Erro de SQL:", e)
@@ -96,7 +99,7 @@ class Conexao:
             print("Erro:", e)
             
         self.desconectar()
-                    
+        return resultado
     
     
     

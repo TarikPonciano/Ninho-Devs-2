@@ -15,7 +15,6 @@ def buscarProdutoPorId(id):
     #Função que busca o banco por um produto específico usando o id e retorna a tupla do primeiro produto do resultado se não retorna None
     
     resultado = conexaoBD.consultarComParametros("SELECT * FROM produtos WHERE id_produto = %s", (id,)) 
-    [()]
     
     if (resultado == []):
         return None
@@ -83,14 +82,33 @@ while True:
             
         
         # Criar a venda (Inserir Venda)
+        # idVenda = conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
+        
         conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
+        idVenda = conexaoBD._cursor.lastrowid
         
         # Criar os registros de venda dos produtos (Inserir na tabela itens)
         
-        # Descobrir o id da venda
+        conexaoBD.manipularComParametros('''INSERT INTO itens VALUES (DEFAULT, %s, %s, %s, %s);''', (idProduto, idVenda, quantidadeComprada, produto[2]))
         
         # Atualizar a quantidade de produto na tabela produto
-        # Atualiza a compra com o Valor Total da compra    
+        novoEstoque = estoqueTotal - quantidadeComprada
+        
+        conexaoBD.manipularComParametros('''
+        UPDATE produtos
+        SET
+        estoque_produto = %s
+        WHERE
+        id_produto = %s''', (novoEstoque, idProduto))
+        
+        # Atualiza a venda com o Valor Total dos produtos   
+        
+        # conexaoBD.manipularComParametros('''
+        # UPDATE vendas
+        # SET
+        # valor_total_venda = %s
+        # WHERE 
+        # id_venda = %s''')
         # Criar nota fiscal simples com produto, quantidade, preço e valor total    
         pass
     elif (op == "0"):
