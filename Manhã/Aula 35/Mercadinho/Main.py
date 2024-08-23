@@ -95,6 +95,7 @@ while True:
         id_venda = %s
         ''', (valorVenda, idVenda))
         # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
+        # Buscar todos os itens da venda registrada(idVenda) e imprimir nas informações na tela
         pass
     elif (menu == "0"):
         print("Saindo do programa...")
