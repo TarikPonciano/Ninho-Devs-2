@@ -71,15 +71,29 @@ while True:
             
         # Criar a venda (Inserir uma venda)
         conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
-        id = conexaoBD._cursor.lastrowid
+        idVenda = conexaoBD._cursor.lastrowid
         
         # id = conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
             
         # Registrar os itens da venda (Descobrir o id da venda)
-        
+        conexaoBD.manipularComParametro("INSERT INTO itens VALUES(DEFAULT, %s, %s, %s, %s)", (idProduto, idVenda, quantidadeProduto, produto[2]))
         
         # Atualizar o estoque dos produtos
+        novaQuantidade = quantidadeDisponivel - quantidadeProduto
+        conexaoBD.manipularComParametro('''
+        UPDATE produtos
+        SET
+        estoque_produto = %s
+        WHERE id_produto = %s''', (novaQuantidade,idProduto))
         # Atualizar a venda com seu valor total
+        valorVenda = float(produto[2]) * quantidadeProduto
+        conexaoBD.manipularComParametro('''
+        UPDATE vendas
+        SET
+        valor_venda = %s
+        WHERE
+        id_venda = %s
+        ''', (valorVenda, idVenda))
         # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
         pass
     elif (menu == "0"):
