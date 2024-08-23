@@ -96,7 +96,20 @@ while True:
         ''', (valorVenda, idVenda))
         # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
         # Buscar todos os itens da venda registrada(idVenda) e imprimir nas informações na tela
-        pass
+        
+        '''
+        ------- Nota Fiscal -------
+        
+        {nome} - {quantidade} - R${preco} - R$ {total}
+        {nome} - {quantidade} - R${preco} - R$ {total}
+        {nome} - {quantidade} - R${preco} - R$ {total}
+        
+        
+        Total Bruto: R$ {totalBruto}
+        Descontos: R$ 0.00
+        Total Geral: R$ {totalBruto - desconto}
+        '''
+        
     elif (menu == "0"):
         print("Saindo do programa...")
         break
