@@ -66,11 +66,27 @@ while True:
                 print(f"Você escolheu {produto[1]}")
                 break
 
-        # Pedir a quantidade de unidades compradas daquele produto
-        #   - Verificar se o estoque é suficiente
+        while (True):
+            # Pedir a quantidade de unidades compradas daquele produto
+            
+            quantidadeComprada = int(input("Digite a quantidade que deseja comprar: "))
+            
+            #   - Verificar se o estoque é suficiente
+            
+            estoqueTotal = produto[3]
+            
+            if estoqueTotal >= quantidadeComprada and quantidadeComprada>0:
+                print(f"Foram adicionados {quantidadeComprada} cópias do produto ao carrinho.")
+                break
+            else:
+                print("Digite uma quantidade válida.")
+            
         
         # Criar a venda (Inserir Venda)
+        
+        
         # Criar os registros de venda dos produtos (Inserir na tabela itens)
+        
         # Atualizar a quantidade de produto na tabela produto
         # Atualiza a compra com o Valor Total da compra    
         # Criar nota fiscal simples com produto, quantidade, preço e valor total    
