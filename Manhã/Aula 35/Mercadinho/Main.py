@@ -7,8 +7,15 @@ from Conexao import Conexao
 
 conexaoBD = Conexao("localhost", "root", "mysql", "jomart")
 
-def buscarProduto(id):
-    pass
+def buscarProdutoPorId(id):
+    #Faz uma consulta usando where para buscar 1 produto só
+    resultado = conexaoBD.consultarComParametro("SELECT * FROM produtos WHERE id_produto = %s", (id,) )
+    #Retorna a tupla do primeiro produto encontrado se achar algum produto e retorna None se não achar nenhum produto
+    if (resultado == []):
+        return None
+    else:
+        return resultado[0]
+    
 
 def verProdutos():
     #Imprimir os produtos disponíveis no formato:
@@ -42,9 +49,15 @@ while True:
         # Exibir a tabela de produtos 
         verProdutos()
         # Escolher os ids dos produtos que serão comprados.
-        idProduto = int(input("Digite o id do produto: "))
-        #   - Validar se o produto existe no banco (Buscar produto)
-        produto = buscarProduto(idProduto)
+        while (True):
+            idProduto = int(input("Digite o id do produto: "))
+            #   - Validar se o produto existe no banco (Buscar produto)
+            produto = buscarProdutoPorId(idProduto) 
+            if (produto == None):
+                print("Escolha um produto válido!")
+            else:
+                print(produto)
+                break
         # Pedir a quantidade de cada produto
         #   - Validar se a quantidade é possível
         # Criar a venda
