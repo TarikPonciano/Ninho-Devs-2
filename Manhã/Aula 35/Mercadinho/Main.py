@@ -70,7 +70,9 @@ while True:
                 print("Insira uma quantidade adequada.")
             
         # Criar a venda (Inserir uma venda)
-        # Registrar os itens da venda
+        conexaoBD.manipular("INSERT INTO vendas VALUES(DEFAULT, DEFAULT, DEFAULT)")
+        # Registrar os itens da venda (Descobrir o id da venda)
+        
         # Atualizar o estoque dos produtos
         # Atualizar a venda com seu valor total
         # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
