@@ -102,15 +102,16 @@ while True:
         id_produto = %s''', (novoEstoque, idProduto))
         
         # Atualiza a venda com o Valor Total dos produtos   
+        valorTotal = float(produto[2]) * quantidadeComprada
+        conexaoBD.manipularComParametros('''
+        UPDATE vendas
+        SET
+        valor_total_venda = %s
+        WHERE 
+        id_venda = %s''',(valorTotal, idVenda))
         
-        # conexaoBD.manipularComParametros('''
-        # UPDATE vendas
-        # SET
-        # valor_total_venda = %s
-        # WHERE 
-        # id_venda = %s''')
         # Criar nota fiscal simples com produto, quantidade, preço e valor total    
-        pass
+        
     elif (op == "0"):
         print("Saindo do Programa...")
         break
