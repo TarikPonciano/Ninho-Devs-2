@@ -69,7 +69,7 @@ while True:
             else:
                 print("Insira uma quantidade adequada.")
             
-        # Criar a venda
+        # Criar a venda (Inserir uma venda)
         # Registrar os itens da venda
         # Atualizar o estoque dos produtos
         # Atualizar a venda com seu valor total
