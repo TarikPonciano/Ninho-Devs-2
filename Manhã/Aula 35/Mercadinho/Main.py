@@ -7,6 +7,9 @@ from Conexao import Conexao
 
 conexaoBD = Conexao("localhost", "root", "mysql", "jomart")
 
+def buscarProduto(id):
+    pass
+
 def verProdutos():
     #Imprimir os produtos disponíveis no formato:
     #ID | Nome | Preço (R$) | Estoque
@@ -37,9 +40,13 @@ while True:
         verProdutos()
     elif (menu == "2"):
         # Exibir a tabela de produtos 
+        verProdutos()
         # Escolher os ids dos produtos que serão comprados.
-        #   - Validar se o produto existe no banco
+        idProduto = int(input("Digite o id do produto: "))
+        #   - Validar se o produto existe no banco (Buscar produto)
+        produto = buscarProduto(idProduto)
         # Pedir a quantidade de cada produto
+        #   - Validar se a quantidade é possível
         # Criar a venda
         # Registrar os itens da venda
         # Atualizar o estoque dos produtos
