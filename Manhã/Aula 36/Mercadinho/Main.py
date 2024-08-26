@@ -29,6 +29,8 @@ def verProdutos():
         
 def gerarNotaFiscal(idVenda):
     # Consultar o banco de dados para resgatar todos os itens associados a àquela venda. (Usar Select com Where)
+    itens = conexaoBD.consultarComParametro("SELECT * FROM itens WHERE id_venda = %s", (idVenda,))
+    
     # Observar como vieram as informações > [()]
     # Consumir a informação para imprimir a nota fiscal seguindo o padrão:
     
@@ -43,12 +45,12 @@ def gerarNotaFiscal(idVenda):
         Total Bruto: R$ {totalBruto}
         Descontos: R$ 0.00
         Total Geral: R$ {totalBruto - desconto}
+        Data da Venda: {data}
     '''
     # Para construir essa mensagem crie uma variável de texto(string) e acrescente a ela as informações de cada item encontrado.  
     
     pass
     
-
 
 while True:
     
@@ -60,7 +62,7 @@ while True:
     1. Ver Produtos
     2. Cadastrar Venda
     0. Sair      
-          ''')
+        ''')
     
     menu = input("Digite a opção desejada: ")
     
