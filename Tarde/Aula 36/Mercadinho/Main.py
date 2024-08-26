@@ -24,7 +24,13 @@ def buscarProdutoPorId(id):
 def gerarNotaFiscal(idVenda):
     # Consultar a tabela itens e encontrar todos os itens que fizeram parte da venda identificada por idVenda
     
+    # itens = conexaoBD.consultarComParametros("SELECT * FROM itens WHERE id_venda = %s", (idVenda,))
     
+    itens = conexaoBD.consultarComParametros('''
+    SELECT produtos.nome_produto, itens.quantidade_item, itens.preco_unitario_item, vendas.data_venda, vendas.valor_total_venda FROM itens
+    INNER JOIN produtos ON produtos.id_produto = itens.id_produto
+    INNER JOIN vendas ON vendas.id_venda = itens.id_venda
+    WHERE itens.id_venda = %s; ''', (idVenda,))
     
     # Ler as informações obtidas e gerar uma nota fiscal no seguinte formato:
     # Use uma variável do tipo texto e "incremente" ela
@@ -43,12 +49,35 @@ def gerarNotaFiscal(idVenda):
     Total Geral: R$ {totalBruto - desconto}
     Data da Venda: {data}
     '''
+    
+    notaFiscal = "----- Nota Fiscal ----- \n\n"
+    notaFiscal += "Nome - Quantidade - Preço - Total \n\n"
+    
+    
+    for item in itens:
+        totalProduto = item[1] * item[2]
+        # produto = buscarProdutoPorId(item[1])
+        # notaFiscal += f"{produto[1]} - {item[3]} - R$ {item[4]:.2f} - R$ {totalProduto:.2f}\n"
+         
+        notaFiscal += f"{item[0]} - {item[1]} - R$ {item[2]:.2f} - R$ {totalProduto:.2f}\n"
     # Para conseguir o nome você deve usar o idProduto para buscar na tabela produtos
+    
     # Para conseguir Total Bruto pode-se calcular ao imprimir cada item ou pode-se consultar a tabela vendas
     # Para conseguir a data da venda você pode usar o idVenda para encontrar a venda certa na tabela vendas
+    # venda = conexaoBD.consultarComParametros("SELECT * FROM vendas WHERE id_venda= %s", (idVenda,))
+    # totalBruto = venda[0][2]
+    # data = venda[0][1]
     
-    pass
-    
+    totalBruto = item[4]
+    data = item[3].strftime("%d/%m/%Y %H:%M:%S")
+
+    notaFiscal += f'''
+Total Bruto = R$ {totalBruto}
+Descontos = R$ 0.00
+Total Final = R$ {totalBruto}
+Data da Venda = {data}
+    '''
+    print(notaFiscal)
     
 
             
@@ -69,7 +98,7 @@ while True:
     1. Ver Produtos
     2. Cadastrar Venda
     0. Sair     
-          ''')
+        ''')
     
     op = input("Digite a opção desejada: ")
     
