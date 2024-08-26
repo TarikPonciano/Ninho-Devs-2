@@ -1,4 +1,5 @@
 from Conexao import Conexao
+from datetime import datetime
 
 # Criar um menu de aplicação com as opções:
 # 1. Ver Produtos
@@ -35,48 +36,51 @@ def gerarNotaFiscal(idVenda):
     INNER JOIN vendas ON vendas.id_venda = itens.id_venda
     WHERE itens.id_venda = %s
                                             ''', (idVenda,))
-    
+    if (itens != []):
     # Observar como vieram as informações > [()]
     # Consumir a informação para imprimir a nota fiscal seguindo o padrão:
     
-    '''
-        ------- Nota Fiscal -------
+        '''
+            ------- Nota Fiscal -------
+            
+            {nome} - {quantidade} - R${preco} - R$ {total}
+            {nome} - {quantidade} - R${preco} - R$ {total}
+            {nome} - {quantidade} - R${preco} - R$ {total}
+            
+            
+            Total Bruto: R$ {totalBruto}
+            Descontos: R$ 0.00
+            Total Geral: R$ {totalBruto - desconto}
+            Data da Venda: {data}
+        '''
+        # Para construir essa mensagem crie uma variável de texto(string) e acrescente a ela as informações de cada item encontrado.  
         
-        {nome} - {quantidade} - R${preco} - R$ {total}
-        {nome} - {quantidade} - R${preco} - R$ {total}
-        {nome} - {quantidade} - R${preco} - R$ {total}
+        notaFiscal = "----- Nota Fiscal -----\n\n"
+        notaFiscal += "Produto - Quantidade - Preço - Total\n\n"
+        for item in itens:
+            valorTotal = item[1] * item[2]
+            
+            #Melhorar a impressão do item para conter o nome do Produto, ao invés de id do Produto
+            # produto = conexaoBD.consultarComParametro("SELECT nome_produto FROM produtos WHERE id_produto = %s", (item[1],)) 
+            
+            # textoItem = f"{produto[0][0]} - {item[3]} - R$ {item[4]:.2f} - R$ {valorTotal:.2f}\n "
+            
+            textoItem = f"{item[0]} - {item[1]} - R$ {item[2]:.2f} - R$ {valorTotal:.2f}\n"
+            
+            notaFiscal += textoItem
         
-        
-        Total Bruto: R$ {totalBruto}
-        Descontos: R$ 0.00
-        Total Geral: R$ {totalBruto - desconto}
-        Data da Venda: {data}
-    '''
-    # Para construir essa mensagem crie uma variável de texto(string) e acrescente a ela as informações de cada item encontrado.  
     
-    notaFiscal = "----- Nota Fiscal -----\n\n"
-    notaFiscal += "Produto - Quantidade - Preço - Total\n\n"
-    for item in itens:
-        valorTotal = item[1] * item[2]
+        finalNotaFiscal = f'''
+    Total Bruto: R$ {item[4]:.2f}
+    Descontos: R$ 0.00
+    Total Geral: R$ {item[4]:.2f}
+    Data da Venda: {item[3]}
+        '''
+        notaFiscal += finalNotaFiscal
+        print(notaFiscal)
         
-        #Melhorar a impressão do item para conter o nome do Produto, ao invés de id do Produto
-        # produto = conexaoBD.consultarComParametro("SELECT nome_produto FROM produtos WHERE id_produto = %s", (item[1],)) 
-        
-        # textoItem = f"{produto[0][0]} - {item[3]} - R$ {item[4]:.2f} - R$ {valorTotal:.2f}\n "
-        
-        textoItem = f"{item[0]} - {item[1]} - R$ {item[2]:.2f} - R$ {valorTotal:.2f}\n "
-        
-        notaFiscal += textoItem
-    
-   
-    finalNotaFiscal = f'''
-Total Bruto: R$ {item[4]:.2f}
-Descontos: R$ 0.00
-Total Geral: R$ {item[4]:.2f}
-Data da Venda: {item[3]}
-    '''
-    notaFiscal += finalNotaFiscal
-    print(notaFiscal)
+    else:
+        print("Nota não existe!")
     
 
 while True:
@@ -175,11 +179,32 @@ while True:
         
        
     elif (menu == "3"):
+        vendas = conexaoBD.consultar("SELECT * FROM vendas")
+        
         # Imprime na tela as notas fiscais seguindo o padrão:
         # Número da Nota - Data da Nota - Total da Nota
+        print("Nº Nota - Data - Total (R$)\n")
+        for venda in vendas:
+            # Convertendo para o formato brasileiro
+            '''
+            %d > dia
+            %m > mês
+            %Y > ano
+            
+            %H > hora
+            %M > minuto
+            %S > segundos
+            '''
+            dataConvertida = venda[1].strftime("%d/%m/%Y %H:%M:%S")
+            
+            
+            print(f"{venda[0]} - {dataConvertida} - {venda[2]}")
+        
         # Pede para o usuário escolher uma das notas pelo número
+        numeroNota = int(input("Digite o número da nota que deseja ver detalhes:"))
+        
         # Usa o gerarNotaFiscal para exibir as informações daquela notinha na tela
-        pass
+        gerarNotaFiscal(numeroNota)
     elif (menu == "0"):
         print("Saindo do programa...")
         break
