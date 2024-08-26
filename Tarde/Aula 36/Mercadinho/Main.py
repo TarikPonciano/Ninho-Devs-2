@@ -23,10 +23,15 @@ def buscarProdutoPorId(id):
     
 def gerarNotaFiscal(idVenda):
     # Consultar a tabela itens e encontrar todos os itens que fizeram parte da venda identificada por idVenda
+    
+    
+    
     # Ler as informações obtidas e gerar uma nota fiscal no seguinte formato:
     # Use uma variável do tipo texto e "incremente" ela
     '''
     ------- Nota Fiscal -------
+    
+    Nome - Quantidade - Preço - Total
     
     {nome} - {quantidade} - R${preco} - R$ {total}
     {nome} - {quantidade} - R${preco} - R$ {total}
