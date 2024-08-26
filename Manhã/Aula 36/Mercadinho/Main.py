@@ -88,6 +88,7 @@ while True:
     
     1. Ver Produtos
     2. Cadastrar Venda
+    3. Ver Notas Fiscais
     0. Sair      
         ''')
     
@@ -97,46 +98,68 @@ while True:
         verProdutos()
     elif (menu == "2"):
         # Exibir a tabela de produtos 
-        verProdutos()
+       
+        carrinhoDeCompras = {}
         # Escolher os ids dos produtos que serão comprados.
         while (True):
-            idProduto = int(input("Digite o id do produto: "))
-            #   - Validar se o produto existe no banco (Buscar produto)
-            produto = buscarProdutoPorId(idProduto) 
-            if (produto == None):
-                print("Escolha um produto válido!")
+            verProdutos()
+            while (True):
+                idProduto = int(input("Digite o id do produto: "))
+                #   - Validar se o produto existe no banco (Buscar produto)
+                produto = buscarProdutoPorId(idProduto) 
+                if (produto == None):
+                    print("Escolha um produto válido!")
+                else:
+                    print(produto)
+                    break
+                
+            # Pedir a quantidade de cada produto
+            while (True):
+                quantidadeProduto = int(input("Digite a quantidade do produto:"))
+                #   - Validar se a quantidade é possível
+                quantidadeDisponivel = produto[3]
+                if (quantidadeDisponivel>=quantidadeProduto and quantidadeProduto>0):
+                    print("Produto adicionado ao carrinho!")
+                    break
+                else:
+                    print("Insira uma quantidade adequada.")
+                    
+            carrinhoDeCompras[idProduto] = [quantidadeProduto, produto]
+            
+            sair = input("Deseja continuar? S/N")
+            if(sair == "S"):
+                pass
             else:
-                print(produto)
+                print("Carrinho finalizado!")
+                print(carrinhoDeCompras)
                 break
-        # Pedir a quantidade de cada produto
-        while (True):
-            quantidadeProduto = int(input("Digite a quantidade do produto:"))
-            #   - Validar se a quantidade é possível
-            quantidadeDisponivel = produto[3]
-            if (quantidadeDisponivel>=quantidadeProduto and quantidadeProduto>0):
-                print("Produto adicionado ao carrinho!")
-                break
-            else:
-                print("Insira uma quantidade adequada.")
             
         # Criar a venda (Inserir uma venda)
         conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
         idVenda = conexaoBD._cursor.lastrowid
         
         # id = conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
-            
         # Registrar os itens da venda (Descobrir o id da venda)
-        conexaoBD.manipularComParametro("INSERT INTO itens VALUES(DEFAULT, %s, %s, %s, %s)", (idProduto, idVenda, quantidadeProduto, produto[2]))
+        valorVenda = 0
+        
+        for idProduto in carrinhoDeCompras:
+            quantidadeComprada = carrinhoDeCompras[idProduto][0]
+            informacoesProduto = carrinhoDeCompras[idProduto][1]
+            
+            conexaoBD.manipularComParametro("INSERT INTO itens VALUES(DEFAULT, %s, %s, %s, %s)", (idProduto, idVenda, quantidadeComprada, informacoesProduto[2]))
         
         # Atualizar o estoque dos produtos
-        novaQuantidade = quantidadeDisponivel - quantidadeProduto
-        conexaoBD.manipularComParametro('''
-        UPDATE produtos
-        SET
-        estoque_produto = %s
-        WHERE id_produto = %s''', (novaQuantidade,idProduto))
+            novaQuantidade = informacoesProduto[3] - quantidadeComprada
+            
+            conexaoBD.manipularComParametro('''
+            UPDATE produtos
+            SET
+            estoque_produto = %s
+            WHERE id_produto = %s''', (novaQuantidade,idProduto))
+            
+            valorVenda += quantidadeComprada * informacoesProduto[2]
         # Atualizar a venda com seu valor total
-        valorVenda = float(produto[2]) * quantidadeProduto
+        
         conexaoBD.manipularComParametro('''
         UPDATE vendas
         SET
@@ -151,7 +174,12 @@ while True:
         gerarNotaFiscal(idVenda)
         
        
-        
+    elif (menu == "3"):
+        # Imprime na tela as notas fiscais seguindo o padrão:
+        # Número da Nota - Data da Nota - Total da Nota
+        # Pede para o usuário escolher uma das notas pelo número
+        # Usa o gerarNotaFiscal para exibir as informações daquela notinha na tela
+        pass
     elif (menu == "0"):
         print("Saindo do programa...")
         break
