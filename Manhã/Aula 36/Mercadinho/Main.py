@@ -49,7 +49,25 @@ def gerarNotaFiscal(idVenda):
     '''
     # Para construir essa mensagem crie uma variável de texto(string) e acrescente a ela as informações de cada item encontrado.  
     
-    pass
+    notaFiscal = "----- Nota Fiscal -----\n\n"
+    notaFiscal += "Produto - Quantidade - Preço - Total\n\n"
+    for item in itens:
+        valorTotal = item[3] * item[4]
+        
+        #Melhorar a impressão do item para conter o nome do Produto, ao invés de id do Produto
+        
+        textoItem = f"{item[1]} - {item[3]} - R$ {item[4]:.2f} - R$ {valorTotal:.2f}\n "
+        
+        notaFiscal += textoItem
+    
+    finalNotaFiscal = f'''
+Total Bruto: R$ 
+Descontos: R$ 0.00
+Total Geral: R$
+Data da Venda:
+    '''
+    notaFiscal += finalNotaFiscal
+    print(notaFiscal)
     
 
 while True:
@@ -123,18 +141,7 @@ while True:
         
         gerarNotaFiscal(idVenda)
         
-        '''
-        ------- Nota Fiscal -------
-        
-        {nome} - {quantidade} - R${preco} - R$ {total}
-        {nome} - {quantidade} - R${preco} - R$ {total}
-        {nome} - {quantidade} - R${preco} - R$ {total}
-        
-        
-        Total Bruto: R$ {totalBruto}
-        Descontos: R$ 0.00
-        Total Geral: R$ {totalBruto - desconto}
-        '''
+       
         
     elif (menu == "0"):
         print("Saindo do programa...")
