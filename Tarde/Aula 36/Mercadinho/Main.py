@@ -97,6 +97,7 @@ while True:
     
     1. Ver Produtos
     2. Cadastrar Venda
+    3. Ver Notas Fiscais
     0. Sair     
         ''')
     
@@ -105,38 +106,55 @@ while True:
     if (op == "1"):
         verProdutos()
     elif (op == "2"):
-        # Mostrar a tabela de produtos para o usuário
-        verProdutos()
         
-        while True:
-            # Pedir o id dos produtos da compra
-            idProduto = int(input("Digite o id do produto:"))
-            
-            #   - Verifica se o produto existe no banco de dados
-            # Consulta o banco pra ver se o produto com id específico existe
-            produto = buscarProdutoPorId(idProduto) #Retornar uma tupla
-            
-            if produto == None:
-                print("Produto não encontrado! Digite um id válido!")
-            else:
-                print(f"Você escolheu {produto[1]}")
-                break
-
+        
+        carrinhoDeCompras = {}
+        # {idProd: [quantidadeComprada, infosProduto]}
+        
         while (True):
-            # Pedir a quantidade de unidades compradas daquele produto
             
-            quantidadeComprada = int(input("Digite a quantidade que deseja comprar: "))
+            # Mostrar a tabela de produtos para o usuário
+            verProdutos()
             
-            #   - Verificar se o estoque é suficiente
+            while True:
+                # Pedir o id dos produtos da compra
+                idProduto = int(input("Digite o id do produto:"))
+                
+                #   - Verifica se o produto existe no banco de dados
+                # Consulta o banco pra ver se o produto com id específico existe
+                produto = buscarProdutoPorId(idProduto) #Retornar uma tupla
+                
+                if produto == None:
+                    print("Produto não encontrado! Digite um id válido!")
+                else:
+                    print(f"Você escolheu {produto[1]}")
+                    break
+
+            while (True):
+                # Pedir a quantidade de unidades compradas daquele produto
+                
+                quantidadeComprada = int(input("Digite a quantidade que deseja comprar: "))
+                
+                #   - Verificar se o estoque é suficiente
+                
+                estoqueTotal = produto[3]
+                
+                if estoqueTotal >= quantidadeComprada and quantidadeComprada>0:
+                    print(f"Foram adicionados {quantidadeComprada} cópias do produto ao carrinho.")
+                    break
+                else:
+                    print("Digite uma quantidade válida.")
+                    
+            carrinhoDeCompras[idProduto] = [quantidadeComprada, produto]
             
-            estoqueTotal = produto[3]
+            sair = input("Deseja continuar? S/N \n")
             
-            if estoqueTotal >= quantidadeComprada and quantidadeComprada>0:
-                print(f"Foram adicionados {quantidadeComprada} cópias do produto ao carrinho.")
-                break
+            if (sair == "S"):
+                pass
             else:
-                print("Digite uma quantidade válida.")
-            
+                print("Carrinho finalizado!")
+                print(carrinhoDeCompras)
+                break 
         
         # Criar a venda (Inserir Venda)
         # idVenda = conexaoBD.manipular("INSERT INTO vendas VALUES (DEFAULT, DEFAULT, DEFAULT)")
@@ -145,21 +163,32 @@ while True:
         idVenda = conexaoBD._cursor.lastrowid
         
         # Criar os registros de venda dos produtos (Inserir na tabela itens)
-        
-        conexaoBD.manipularComParametros('''INSERT INTO itens VALUES (DEFAULT, %s, %s, %s, %s);''', (idProduto, idVenda, quantidadeComprada, produto[2]))
+        valorTotal = 0
+        #{idProd: [quantidadeComprada, infoProduto]}
+        for chave in carrinhoDeCompras:
+            
+            produto = carrinhoDeCompras[chave][1]
+            quantidadeComprada = carrinhoDeCompras[chave][0]
+            
+            precoProduto = produto[2]
+            
+            conexaoBD.manipularComParametros('''INSERT INTO itens VALUES (DEFAULT, %s, %s, %s, %s);''', (chave, idVenda, quantidadeComprada, precoProduto))
         
         # Atualizar a quantidade de produto na tabela produto
-        novoEstoque = estoqueTotal - quantidadeComprada
-        
-        conexaoBD.manipularComParametros('''
-        UPDATE produtos
-        SET
-        estoque_produto = %s
-        WHERE
-        id_produto = %s''', (novoEstoque, idProduto))
+            estoqueTotal = produto[3]
+            novoEstoque = estoqueTotal - quantidadeComprada
+            
+            conexaoBD.manipularComParametros('''
+            UPDATE produtos
+            SET
+            estoque_produto = %s
+            WHERE
+            id_produto = %s''', (novoEstoque, chave))
+            
+            valorTotal += quantidadeComprada * precoProduto
         
         # Atualiza a venda com o Valor Total dos produtos   
-        valorTotal = float(produto[2]) * quantidadeComprada
+        
         conexaoBD.manipularComParametros('''
         UPDATE vendas
         SET
@@ -169,6 +198,13 @@ while True:
         
         # Criar nota fiscal simples com produto, quantidade, preço e valor total    
         gerarNotaFiscal(idVenda)
+    elif (op=="3"):
+        # Exibir lista de notas fiscais no formato:
+        # Nº da Nota | Data da Compra | Total da Compra (R$)
+        
+        # Pedir ao usuário que escolha uma nota pelo número
+        # Imprimir os detalhes da nota fiscal (gerarNotaFiscal(numero))
+        pass
         
     elif (op == "0"):
         print("Saindo do Programa...")
