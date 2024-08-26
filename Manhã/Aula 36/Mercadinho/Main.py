@@ -26,6 +26,27 @@ def verProdutos():
     print("ID | Nome | Preço (R$) | Estoque ")
     for produto in consultaProdutos:
         print(f"{produto[0]} | {' '*round((15 - (len(produto[1]))/2))} {produto[1]} {' '*round((15 - (len(produto[1]))/2))} | {produto[2]} | {produto[3]} ")
+        
+def gerarNotaFiscal(idVenda):
+    # Consultar o banco de dados para resgatar todos os itens associados a àquela venda. (Usar Select com Where)
+    # Observar como vieram as informações > [()]
+    # Consumir a informação para imprimir a nota fiscal seguindo o padrão:
+    
+    '''
+        ------- Nota Fiscal -------
+        
+        {nome} - {quantidade} - R${preco} - R$ {total}
+        {nome} - {quantidade} - R${preco} - R$ {total}
+        {nome} - {quantidade} - R${preco} - R$ {total}
+        
+        
+        Total Bruto: R$ {totalBruto}
+        Descontos: R$ 0.00
+        Total Geral: R$ {totalBruto - desconto}
+    '''
+    # Para construir essa mensagem crie uma variável de texto(string) e acrescente a ela as informações de cada item encontrado.  
+    
+    pass
     
 
 
@@ -94,8 +115,11 @@ while True:
         WHERE
         id_venda = %s
         ''', (valorVenda, idVenda))
+        
         # Imprimir na tela a "nota fiscal" com produtos, preços, quantidades e valor total
         # Buscar todos os itens da venda registrada(idVenda) e imprimir nas informações na tela
+        
+        gerarNotaFiscal(idVenda)
         
         '''
         ------- Nota Fiscal -------
