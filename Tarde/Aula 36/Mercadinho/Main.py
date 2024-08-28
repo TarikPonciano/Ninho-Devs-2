@@ -2,6 +2,7 @@ from Conexao import Conexao
 
 conexaoBD = Conexao("localhost", "root", "mysql", "mercadojoa")
 
+
 def verProdutos():
     
     produtos = conexaoBD.consultar("SELECT * FROM produtos")
@@ -201,10 +202,17 @@ while True:
     elif (op=="3"):
         # Exibir lista de notas fiscais no formato:
         # Nº da Nota | Data da Compra | Total da Compra (R$)
+        notasFiscais = conexaoBD.consultar("SELECT * FROM vendas")
+        
+        print("Nº da Nota | Data da Compra | Total da Compra (R$)")
+        for venda in notasFiscais:
+            print(f"{venda[0]} | {venda[1]} | {venda[2]}")
         
         # Pedir ao usuário que escolha uma nota pelo número
+        
+        numero = int(input("Digite o número da nota desejada: "))
         # Imprimir os detalhes da nota fiscal (gerarNotaFiscal(numero))
-        pass
+        gerarNotaFiscal(numero)
         
     elif (op == "0"):
         print("Saindo do Programa...")
