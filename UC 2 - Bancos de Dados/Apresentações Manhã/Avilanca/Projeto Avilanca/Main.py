@@ -71,7 +71,7 @@ while True:
                                                         opcaoedit = "forma_pagamento"
                                                 if opcaoedit == '4':
                                                         opcaoedit = "n_do_assento"
-                                                if opcaoedit2 == '5':
+                                                if opcaoedit == '5':
                                                         conexaoBD.manipularComParametros("DELETE FROM passagem WHERE id_passsagem = %s", (selecao,))
                                                         print("Dados excluidos.")
                                                         input("Aperte enter para prosseguir\n")
