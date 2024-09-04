@@ -1,0 +1,1 @@
+INSERT INTO usuario VALUES (DEFAULT, "admin", "admin", SHA("admin123"), "admin", 30)
