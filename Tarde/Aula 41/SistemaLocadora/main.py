@@ -22,10 +22,24 @@ Duração - {duracao}
 Gênero - {genero}              
               ''')
         
-        
+        popup.addButton(QPushButton("Confirmar"), popup.ButtonRole.NoRole)
+        popup.addButton(QPushButton("Cancelar"), popup.ButtonRole.NoRole)
+        popup.addButton(QPushButton("Resetar"), popup.ButtonRole.NoRole)
         resultado = popup.exec()
         
+        if resultado == 2:
+            limparInformacoes()
+        print(resultado)
         
+    def limparInformacoes():
+        campoNome.setText("")
+        campoDuracao.setText("")
+        campoGenero.setText("")
+        
+        campoNome.setEnabled(True)
+        campoDuracao.setEnabled(True)
+        campoGenero.setEnabled(True)
+        botaoEnviar.setEnabled(True)
     
     app = QApplication(sys.argv)
     
@@ -77,6 +91,9 @@ Gênero - {genero}
     botaoEnviar.clicked.connect(enviarInformacoes)
     
     #O botão limpar deverá limpar todos os campos do formulário e reativar a edição e o botão enviar, caso estejam desativados
+    botaoLimpar = QPushButton("Limpar", janela)
+    botaoLimpar.setGeometry(100, 200, 80, 40)
+    botaoLimpar.clicked.connect(limparInformacoes)
     
     janela.show()
     sys.exit(app.exec())
