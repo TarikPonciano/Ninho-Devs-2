@@ -10,17 +10,30 @@ def main():
         campoNome.setEnabled(False)
         campoDuracao.setEnabled(False)
         campoGenero.setEnabled(False)
+        botaoEnviar.setEnabled(False)
         
-        # popup = QMessageBox(janela)
-        print(f'''
-    Filme Cadastrado
+        popup = QMessageBox(janela)
+        popup.setText(f'''
+Filme Cadastrado
     
 Nome: {nome}
 Duração: {duracao}
 Gênero: {genero}
                       ''')
         
+        popup.setWindowTitle("CADASTRO")
         
+        popup.exec()
+        
+    def limparFormulario():
+        campoNome.setText("")
+        campoDuracao.setText("")
+        campoGenero.setText("")
+        
+        campoNome.setEnabled(True)
+        campoDuracao.setEnabled(True)
+        campoGenero.setEnabled(True)
+        botaoEnviar.setEnabled(True)
         
         
          
@@ -74,6 +87,7 @@ Gênero: {genero}
     
     botaoLimpar = QPushButton("Limpar", janela)
     botaoLimpar.setGeometry(100, 200, 80,40 )
+    botaoLimpar.clicked.connect(limparFormulario)
     
     
     janela.show()
