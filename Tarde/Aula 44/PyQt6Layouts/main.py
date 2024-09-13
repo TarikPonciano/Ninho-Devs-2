@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QPushButton, QMessageBox
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QPushButton, QMessageBox, QFormLayout, QLineEdit
 
 class JanelaPrincipal(QMainWindow):
     def __init__(self):
@@ -69,6 +69,15 @@ class JanelaPrincipal(QMainWindow):
         self.rotuloInserirFuncionarios = QLabel("Inserir Funcionários",  self.janelaInserirFuncionarios)
         self.rotuloInserirFuncionarios.move(150, 50)
         self.rotuloInserirFuncionarios.setStyleSheet("color:white; font-size: 32px ; font-family: 'Arial', sans-serif; font-weight: bold;")
+        self.formulario = QWidget(self.janelaInserirFuncionarios)
+        self.formulario.setGeometry(200,200,400,400)
+        self.formulario.setStyleSheet("background-color:#f0f0f0;")
+        self.formularioLayout = QFormLayout()
+        
+        self.formularioLayout.addRow("Nome: ", QLineEdit())
+        self.formularioLayout.addRow("Cargo: ", QLineEdit())
+        self.formularioLayout.setHorizontalSpacing(50)
+        self.formulario.setLayout(self.formularioLayout)
         
         self.botaoInserirFuncionariosVoltar = QPushButton("Voltar", self.janelaInserirFuncionarios)
         self.botaoInserirFuncionariosVoltar.move(400,200)
