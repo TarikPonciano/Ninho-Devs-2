@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QLabel, QPushButton, QMessageBox
 
 class JanelaPrincipal(QMainWindow):
     def __init__(self):
@@ -31,6 +31,7 @@ class JanelaPrincipal(QMainWindow):
         
         self.botaoInserirFuncionarios = QPushButton("Inserir Funcionarios", self.contentPane)
         self.botaoInserirFuncionarios.setGeometry(300,210,  200, 50)
+        self.botaoInserirFuncionarios.clicked.connect(self.exibirInserirFuncionarios)
         
         self.botaoAlterarFuncionarios = QPushButton("Alterar Funcionarios", self.contentPane)
         
@@ -42,10 +43,42 @@ class JanelaPrincipal(QMainWindow):
         self.botaoSair = QPushButton("Sair", self.contentPane)
         self.botaoSair.setGeometry(300,390,  200, 50)
         self.botaoSair.setStyleSheet("background-color: #952828;")
+        self.botaoSair.clicked.connect(self.sairAplicacao)
         
 
         self.setCentralWidget(self.contentPane)
 
+    def sairAplicacao(self):
+        popup = QMessageBox(self)
+        
+        popup.setText("Deseja realmente sair da aplicação?")
+        popup.addButton("Sim", QMessageBox.ButtonRole.YesRole)
+        popup.addButton("Não", QMessageBox.ButtonRole.NoRole)
+        resposta = popup.exec()
+        
+        print(resposta)
+        if resposta == 0:
+            self.close()
+            
+    def exibirInserirFuncionarios(self):
+        
+        self.janelaInserirFuncionarios = QWidget()
+        self.janelaInserirFuncionarios.setStyleSheet("background-color:green;")
+        self.janelaInserirFuncionarios.setGeometry(200,50, self.contentPane.width(),  self.contentPane.height())
+        
+        self.rotuloInserirFuncionarios = QLabel("Inserir Funcionários",  self.janelaInserirFuncionarios)
+        self.rotuloInserirFuncionarios.move(150, 50)
+        self.rotuloInserirFuncionarios.setStyleSheet("color:white; font-size: 32px ; font-family: 'Arial', sans-serif; font-weight: bold;")
+        
+        self.botaoInserirFuncionariosVoltar = QPushButton("Voltar", self.janelaInserirFuncionarios)
+        self.botaoInserirFuncionariosVoltar.move(400,200)
+        self.botaoInserirFuncionariosVoltar.setStyleSheet("background-color:  #f0f0f0;")
+        self.botaoInserirFuncionariosVoltar.clicked.connect(lambda: self.voltarMenuPrincipal(self.janelaInserirFuncionarios))
+        
+        self.janelaInserirFuncionarios.show()
+        self.hide()
+        
+        
     def exibirVerFuncionarios(self):
         self.janelaVerFuncionarios = QWidget()
         self.janelaVerFuncionarios.setStyleSheet("background-color:red;")
@@ -57,15 +90,16 @@ class JanelaPrincipal(QMainWindow):
         self.botaoVerFuncionariosVoltar = QPushButton("Voltar", self.janelaVerFuncionarios)
         self.botaoVerFuncionariosVoltar.move(400,200)
         self.botaoVerFuncionariosVoltar.setStyleSheet("background-color:  #f0f0f0;")
-        self.botaoVerFuncionariosVoltar.clicked.connect(self.voltarMenuPrincipal)
+        self.botaoVerFuncionariosVoltar.clicked.connect(lambda:self.voltarMenuPrincipal(self.janelaVerFuncionarios))
 
 
 
         self.janelaVerFuncionarios.show()
         self.hide()
         
-    def voltarMenuPrincipal(self):
-        self.janelaVerFuncionarios.close()
+    def voltarMenuPrincipal(self,janelaAtual):
+        
+        janelaAtual.close()
         self.show()
         
 def main():
