@@ -26,6 +26,7 @@ class JanelaPrincipal(QMainWindow):
         
         self.botaoVerFuncionarios = QPushButton("Ver Funcionarios", self.contentPane)
         self.botaoVerFuncionarios.setGeometry(300,150,  200, 50)
+        self.botaoVerFuncionarios.clicked.connect(self.exibirVerFuncionarios)
 
         
         self.botaoInserirFuncionarios = QPushButton("Inserir Funcionarios", self.contentPane)
@@ -40,13 +41,32 @@ class JanelaPrincipal(QMainWindow):
         
         self.botaoSair = QPushButton("Sair", self.contentPane)
         self.botaoSair.setGeometry(300,390,  200, 50)
-        
-       
+        self.botaoSair.setStyleSheet("background-color: #952828;")
         
 
         self.setCentralWidget(self.contentPane)
 
+    def exibirVerFuncionarios(self):
+        self.janelaVerFuncionarios = QWidget()
+        self.janelaVerFuncionarios.setStyleSheet("background-color:red;")
+        self.janelaVerFuncionarios.setGeometry(200,50, self.contentPane.width(),  self.contentPane.height())
+        self.rotuloVerFuncionarios = QLabel("Ver Funcionários",  self.janelaVerFuncionarios)
+        self.rotuloVerFuncionarios.move(150, 50)
+        self.rotuloVerFuncionarios.setStyleSheet("color:white; font-size: 32px ; font-family: 'Arial', sans-serif; font-weight: bold;")
         
+        self.botaoVerFuncionariosVoltar = QPushButton("Voltar", self.janelaVerFuncionarios)
+        self.botaoVerFuncionariosVoltar.move(400,200)
+        self.botaoVerFuncionariosVoltar.setStyleSheet("background-color:  #f0f0f0;")
+        self.botaoVerFuncionariosVoltar.clicked.connect(self.voltarMenuPrincipal)
+
+
+
+        self.janelaVerFuncionarios.show()
+        self.hide()
+        
+    def voltarMenuPrincipal(self):
+        self.janelaVerFuncionarios.close()
+        self.show()
         
 def main():
     app = QApplication(sys.argv)
