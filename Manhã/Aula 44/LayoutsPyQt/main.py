@@ -37,7 +37,7 @@ class JanelaPrincipal(QMainWindow):
         
         self.botaoInserirFuncionarios = QPushButton("Inserir Funcionarios", self.contentPane)
         self.botaoInserirFuncionarios.setGeometry(200,200,175,50)
-        # self.botaoInserirFuncionarios.clicked.connect()
+        self.botaoInserirFuncionarios.clicked.connect(self.exibirInserirFuncionarios)
         
         self.botaoAlterarFuncionarios = QPushButton("Alterar Funcionarios", self.contentPane)
         self.botaoAlterarFuncionarios.setGeometry(200,250,175,50)
@@ -48,17 +48,29 @@ class JanelaPrincipal(QMainWindow):
         # self.botaoRemoverFuncionarios.clicked.connect()
         
     def exibirVerFuncionarios(self):
-        self.novaJanela = QWidget()
-        self.novaJanela.setWindowTitle("Ver Funcionários")
-        self.novaJanela.setGeometry(200,200, 400,300)
+        self.janelaVerFuncionarios = QWidget()
+        self.janelaVerFuncionarios.setWindowTitle("Ver Funcionários")
+        self.janelaVerFuncionarios.setGeometry(200,200, 400,300)
         
-        self.botaoNovaJanelaVoltar = QPushButton("Voltar", self.novaJanela)
-        self.botaoNovaJanelaVoltar.clicked.connect(self.voltarParaJanelaPrincipal)
+        self.botaoJanelaVerFuncionariosVoltar = QPushButton("Voltar", self.janelaVerFuncionarios)
+        self.botaoJanelaVerFuncionariosVoltar.clicked.connect(lambda: self.voltarParaJanelaPrincipal(self.janelaVerFuncionarios))
         
-        self.novaJanela.show()
+    
+        self.janelaVerFuncionarios.show()
         self.hide()
-    def voltarParaJanelaPrincipal(self):
-        self.novaJanela.close()
+    
+    def exibirInserirFuncionarios(self):
+        self.janelaInserirFuncionarios = QWidget()
+        self.janelaInserirFuncionarios.setWindowTitle("Inserir Funcionarios")
+        self.janelaInserirFuncionarios.setGeometry(200,200,400,300)
+        
+        self.janelaInserirFuncionariosBotaoVoltar = QPushButton("Voltar", self.janelaInserirFuncionarios)
+        self.janelaInserirFuncionariosBotaoVoltar.clicked.connect(lambda: self.voltarParaJanelaPrincipal(self.janelaInserirFuncionarios))
+        
+        self.janelaInserirFuncionarios.show()
+        self.hide()
+    def voltarParaJanelaPrincipal(self, janelaAtual):
+        janelaAtual.close()
         self.show()
         
 
