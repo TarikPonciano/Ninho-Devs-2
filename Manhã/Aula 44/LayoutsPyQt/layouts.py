@@ -20,13 +20,13 @@ class JanelaPrincipal (QMainWindow):
         
         self.botao1 = QPushButton("Botao 1")
     
-        self.botao1.setSizePolicy(QSizePolicy.)
+        self.botao1.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         self.botao2 = QPushButton("Botao 2")
-        self.botao2.setSizePolicy(QSizePolicy.expandingDirections)
+        self.botao2.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         self.botao3 = QPushButton("Botao 3")
-        self.botao3.setSizePolicy(QSizePolicy.expandingDirections)
+        self.botao3.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         self.botao4 = QPushButton("Botao 4")
-        self.botao4.setSizePolicy(QSizePolicy.expandingDirections)
+        self.botao4.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         self.layoutMenuPrincipal.addWidget(self.botao1)
         self.layoutMenuPrincipal.addWidget(self.botao2)
