@@ -7,9 +7,10 @@ class JanelaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Sistema RH")
+        
         self.setFixedSize(800,600)
         self.contentPane = QWidget()
-        self.contentPane.setStyleSheet("QWidget {background-color: rgb(125,125,125)}")
+        self.contentPane.setStyleSheet("QWidget {background-color: black;}")
         self.setCentralWidget(self.contentPane)
         
         self.layoutJanela = QHBoxLayout()
@@ -20,7 +21,7 @@ class JanelaPrincipal(QMainWindow):
         self.layoutJanela.addWidget(self.menuLateral,1)
         
         self.conteudoPrincipal = QWidget()
-        self.conteudoPrincipal.setStyleSheet("QWidget {background-color:rgb(0,180,0)}")
+        self.conteudoPrincipal.setStyleSheet("QWidget {background-color:#2f2b30;}")
         self.layoutJanela.addWidget(self.conteudoPrincipal,3)
         
         
@@ -28,28 +29,39 @@ class JanelaPrincipal(QMainWindow):
         
     def criarMenuLateral(self):
         menuLateral = QWidget()
-        menuLateral.setStyleSheet('''QWidget {background-color:rgb(180,0,0); border:3px solid black;} 
-        QPushButton {background-color: rgb(0,0,150); color: white; border: 2px outset black; border-radius:30px; height: 100%;}
+        menuLateral.setStyleSheet('''QWidget {background-color:#1f2124; border:3px solid black;} 
+        QPushButton {background-color: #252680; color: white; border: 2px outset black; border-top-left-radius: 20px; border-bottom-left-radius: 20px; font: 16px;}
+        QPushButton:hover {background-color: #1d1e63;
+        }
+        QPushButton:pressed {background-color: #080bbf;}
         ''')
         layoutMenuLateral = QVBoxLayout()
-        layoutMenuLateral.setSpacing(25)
-        layoutMenuLateral.setContentsMargins(50, 100, 0, 200)
+        layoutMenuLateral.setSpacing(30)
+        layoutMenuLateral.setContentsMargins(40, 100, 0, 150)
         
         botaoVerFuncionarios = QPushButton("Ver Funcionarios")
+        botaoVerFuncionarios.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoVerFuncionarios)
         
         botaoInserirFuncionario = QPushButton("Inserir Funcionario")
+        botaoInserirFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoInserirFuncionario)
         
         botaoAlterarFuncionario = QPushButton("Alterar Funcionario")
+        botaoAlterarFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        
         layoutMenuLateral.addWidget(botaoAlterarFuncionario)
         
         botaoRemoverFuncionario = QPushButton("Remover Funcionario")
+        botaoRemoverFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        
         layoutMenuLateral.addWidget(botaoRemoverFuncionario)
         
         botaoSair = QPushButton("Sair")
+        botaoSair.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        
         layoutMenuLateral.addWidget(botaoSair)
         
         menuLateral.setLayout(layoutMenuLateral)
