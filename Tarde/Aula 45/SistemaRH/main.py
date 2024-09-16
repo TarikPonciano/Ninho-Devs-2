@@ -10,7 +10,7 @@ class JanelaPrincipal (QMainWindow):
         self.setFixedSize(800,600)
         
         self.contentPane = QWidget()
-        self.contentPane.setStyleSheet("QWidget { background-color: rgb(125,125,125);}")
+        self.contentPane.setStyleSheet("QWidget { background-color: black;}")
         
         self.layoutJanela = QHBoxLayout()
         self.layoutJanela.setContentsMargins(1,1,1,1)
@@ -20,7 +20,7 @@ class JanelaPrincipal (QMainWindow):
         self.layoutJanela.addWidget(self.menuLateral,1)    
         
         self.conteudoPrincipal = QWidget()
-        self.conteudoPrincipal.setStyleSheet("background-color:rgb(150,150,0)")
+        self.conteudoPrincipal.setStyleSheet("background-color:#1c1c36")
         
         self.layoutJanela.addWidget(self.conteudoPrincipal,3)
         
@@ -34,23 +34,23 @@ class JanelaPrincipal (QMainWindow):
 
         menuLateral.setStyleSheet('''
         QWidget{
-            background-color: rgb(120,0,0);
+            background-color: #0e0e1a;
             border: 3px solid black;}
         QPushButton {
-            background-color: rgb(0,0,150);
+            background-color: hsv(242, 57%, 51%);
             color: white;
             font: 16px;
             font-weight: bold;
             font-family: "Segoe UI";
-            border: 1px outset #f0f0f0;
+            border: 1px outset #000000;
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
             }
         QPushButton:hover{
-            background-color:rgb(0,0,120);
+            background-color:hsv(242, 57%, 31%);
         }
         QPushButton:pressed{
-            background-color:rgb(0,0,170);
+            background-color:hsv(242, 57%, 71%);
             border-style: inset;
         }
             ''')
