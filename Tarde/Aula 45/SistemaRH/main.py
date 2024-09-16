@@ -30,37 +30,57 @@ class JanelaPrincipal (QMainWindow):
         
     def criarMenuLateral(self):
         menuLateral = QWidget()
+        
+
         menuLateral.setStyleSheet('''
         QWidget{
             background-color: rgb(120,0,0);
             border: 3px solid black;}
         QPushButton {
-            background-color: rgb(0,0,120);
+            background-color: rgb(0,0,150);
             color: white;
             font: 16px;
-            }''')
+            font-weight: bold;
+            font-family: "Segoe UI";
+            border: 1px outset #f0f0f0;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            }
+        QPushButton:hover{
+            background-color:rgb(0,0,120);
+        }
+        QPushButton:pressed{
+            background-color:rgb(0,0,170);
+            border-style: inset;
+        }
+            ''')
         
         layoutMenuLateral = QVBoxLayout()
-        layoutMenuLateral.setContentsMargins(1,1,1,1)
-        layoutMenuLateral.setSpacing(1)
+        layoutMenuLateral.setContentsMargins(40,100,0,150)
+        layoutMenuLateral.setSpacing(15)
         
         botaoVerFuncionarios = QPushButton("Ver Funcionarios")
+        botaoVerFuncionarios.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoVerFuncionarios)
         
         botaoInserirFuncionario = QPushButton("Inserir Funcionario")
+        botaoInserirFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoInserirFuncionario)
         
         botaoAlterarFuncionario = QPushButton("Alterar Funcionario")
+        botaoAlterarFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoAlterarFuncionario)
         
         botaoRemoverFuncionario = QPushButton("Remover Funcionario")
+        botaoRemoverFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoRemoverFuncionario)
         
         botaoSair = QPushButton("Sair")
+        botaoSair.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         
         layoutMenuLateral.addWidget(botaoSair)
         
