@@ -19,15 +19,44 @@ class JanelaPrincipal (QMainWindow):
         self.menuLateral = self.criarMenuLateral()    
         self.layoutJanela.addWidget(self.menuLateral,1)    
         
-        self.conteudoPrincipal = QWidget()
-        self.conteudoPrincipal.setStyleSheet("background-color:#1c1c36")
+        self.conteudoPrincipal = self.criarConteudoPrincipal()
         
         self.layoutJanela.addWidget(self.conteudoPrincipal,3)
         
         
         self.contentPane.setLayout(self.layoutJanela)
         self.setCentralWidget(self.contentPane)
+    
+    def criarConteudoPrincipal(self):
         
+        conteudoPrincipal = QWidget()
+        conteudoPrincipal.setStyleSheet('''QWidget{background-color:#1c1c36}
+        QLabel{
+            font:32px;
+            color:white;
+            font-family: "Segoe UI";
+            font-weight:bold;
+        }''')
+        
+        layoutConteudoPrincipal = QVBoxLayout()
+        layoutConteudoPrincipal.setContentsMargins(50,20,50,50)
+        layoutConteudoPrincipal.setSpacing(20)
+        
+        self.rotuloTitulo = QLabel("Título Teste")
+        self.rotuloTitulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        layoutConteudoPrincipal.addWidget(self.rotuloTitulo,1)
+        
+        caixaDeConteudo = QWidget()
+        caixaDeConteudo.setStyleSheet("background-color:magenta;")
+        
+        layoutConteudoPrincipal.addWidget(caixaDeConteudo,5)
+        
+        conteudoPrincipal.setLayout(layoutConteudoPrincipal)
+        
+        return conteudoPrincipal
+        
+    
     def criarMenuLateral(self):
         menuLateral = QWidget()
         
@@ -70,16 +99,21 @@ class JanelaPrincipal (QMainWindow):
         
         botaoVerFuncionarios = QPushButton("Ver Funcionarios")
         botaoVerFuncionarios.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        botaoVerFuncionarios.clicked.connect(lambda: self.mudarTitulo(1))
         
         layoutMenuLateral.addWidget(botaoVerFuncionarios)
         
         botaoInserirFuncionario = QPushButton("Inserir Funcionario")
         botaoInserirFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        botaoInserirFuncionario.clicked.connect(lambda: self.mudarTitulo(2))
+
         
         layoutMenuLateral.addWidget(botaoInserirFuncionario)
         
         botaoAlterarFuncionario = QPushButton("Alterar Funcionario")
         botaoAlterarFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        botaoAlterarFuncionario.clicked.connect(lambda:  self.mudarTitulo(3))
+
         
         layoutMenuLateral.addWidget(botaoAlterarFuncionario)
         
@@ -91,6 +125,8 @@ class JanelaPrincipal (QMainWindow):
         botaoSair = QPushButton("Sair")
         botaoSair.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
         botaoSair.setObjectName("Sair")
+        botaoSair.clicked.connect(lambda: self.close())
+        #Criar interação do botão sair para fechar a aplicação
         
         layoutMenuLateral.addWidget(botaoSair)
         
@@ -98,7 +134,16 @@ class JanelaPrincipal (QMainWindow):
         
         return menuLateral
 
+    def mudarTitulo(self, telaEscolhida):
         
+        if telaEscolhida == 1:
+            self.rotuloTitulo.setText("Ver Funcionários")
+            
+        if telaEscolhida == 2:
+            self.rotuloTitulo.setText("Inserir Funcionário")
+            
+        if telaEscolhida == 3:
+            self.rotuloTitulo.setText("Alterar Funcionário")
         
 def main():
     app = QApplication(sys.argv)
