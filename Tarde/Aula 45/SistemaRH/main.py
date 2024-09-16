@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QMainWindow, QVBoxLayout, QHBoxLayout, QPushButton, QFormLayout, QSizePolicy, QComboBox, QStackedLayout
+from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QMainWindow, QVBoxLayout, QHBoxLayout, QPushButton, QFormLayout, QSizePolicy, QComboBox, QStackedLayout, QLineEdit
 from PyQt6.QtGui import QFont, QIcon
 from PyQt6.QtCore import Qt
 
@@ -50,13 +50,98 @@ class JanelaPrincipal (QMainWindow):
         caixaDeConteudo = QWidget()
         caixaDeConteudo.setStyleSheet("background-color:magenta;")
         
+        self.layoutCaixaDeConteudo = QStackedLayout()
+        
+        telaVerFuncionarios = self.criarTelaVerFuncionarios()
+        
+        self.layoutCaixaDeConteudo.addWidget(telaVerFuncionarios)
+        
+        telaInserirFuncionario = self.criarTelaInserirFuncionario()
+        
+        self.layoutCaixaDeConteudo.addWidget(telaInserirFuncionario)
+        
+        telaInicial = QWidget()
+        
+        self.layoutCaixaDeConteudo.addWidget(telaInicial)
+        
+        self.layoutCaixaDeConteudo.setCurrentIndex(2)
+        
+        caixaDeConteudo.setLayout(self.layoutCaixaDeConteudo)
+        
         layoutConteudoPrincipal.addWidget(caixaDeConteudo,5)
         
         conteudoPrincipal.setLayout(layoutConteudoPrincipal)
         
         return conteudoPrincipal
-        
     
+    def criarTelaInserirFuncionario(self):
+        telaInserirFuncionario = QWidget()
+        telaInserirFuncionario.setStyleSheet('''QWidget{background-color:#1c1c36; border:5px outset white; }
+        QPushButton {
+            background-color: white;
+        }
+        QPushButton:hover{
+            background-color: gray;
+        }
+        QLabel{
+            font:24px;
+            color:white;
+            font-family:"Segoe UI";
+            font-weight:bold;
+        }
+        QLineEdit{
+            background-color: white;
+            color:black;
+            font:24px;
+            font-family:"Segoe UI";
+        }
+        QComboBox {
+            background-color:white;
+        }
+    
+        ''')
+        
+        layoutTelaInserirFuncionario = QFormLayout()
+        
+        layoutTelaInserirFuncionario.setHorizontalSpacing(50)
+        layoutTelaInserirFuncionario.setVerticalSpacing(50)
+        
+        campoNome = QLineEdit()
+        layoutTelaInserirFuncionario.addRow("Nome:", campoNome)
+        
+        listaCargos = QComboBox()
+        listaCargos.addItems(["Vendedor", "Gerente", "Repositor", "Motorista"])
+        layoutTelaInserirFuncionario.addRow("Cargo:", listaCargos)
+        
+        campoSalario = QLineEdit()
+        layoutTelaInserirFuncionario.addRow("Salário:", campoSalario)
+        
+        telaInserirFuncionario.setLayout(layoutTelaInserirFuncionario)
+        
+        return telaInserirFuncionario
+        
+        
+    def criarTelaVerFuncionarios(self):
+        telaVerFuncionarios = QWidget()
+        telaVerFuncionarios.setStyleSheet('''QWidget{background-color:#1c1c36; border:5px outset white; }
+        QPushButton {
+            background-color: white;
+        }
+        QPushButton:hover{
+            background-color: gray;
+        }
+        ''')
+        layoutTelaVerFuncionarios = QVBoxLayout()
+        layoutTelaVerFuncionarios.setContentsMargins(50,20,50,20)
+        layoutTelaVerFuncionarios.setSpacing(20)  
+               
+        for i in range(10):
+            botaoFuncionario  = QPushButton(f"Funcionário {i+1}")
+            layoutTelaVerFuncionarios.addWidget(botaoFuncionario)
+
+        telaVerFuncionarios.setLayout(layoutTelaVerFuncionarios)
+        
+        return telaVerFuncionarios
     def criarMenuLateral(self):
         menuLateral = QWidget()
         
@@ -99,20 +184,20 @@ class JanelaPrincipal (QMainWindow):
         
         botaoVerFuncionarios = QPushButton("Ver Funcionarios")
         botaoVerFuncionarios.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
-        botaoVerFuncionarios.clicked.connect(lambda: self.mudarTitulo(1))
+        botaoVerFuncionarios.clicked.connect(lambda: self.mudarJanela(0))
         
         layoutMenuLateral.addWidget(botaoVerFuncionarios)
         
         botaoInserirFuncionario = QPushButton("Inserir Funcionario")
         botaoInserirFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
-        botaoInserirFuncionario.clicked.connect(lambda: self.mudarTitulo(2))
+        botaoInserirFuncionario.clicked.connect(lambda: self.mudarJanela(1))
 
         
         layoutMenuLateral.addWidget(botaoInserirFuncionario)
         
         botaoAlterarFuncionario = QPushButton("Alterar Funcionario")
         botaoAlterarFuncionario.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
-        botaoAlterarFuncionario.clicked.connect(lambda:  self.mudarTitulo(3))
+        botaoAlterarFuncionario.clicked.connect(lambda:  self.mudarJanela(2))
 
         
         layoutMenuLateral.addWidget(botaoAlterarFuncionario)
@@ -134,16 +219,19 @@ class JanelaPrincipal (QMainWindow):
         
         return menuLateral
 
-    def mudarTitulo(self, telaEscolhida):
+    def mudarJanela(self, telaEscolhida):
         
-        if telaEscolhida == 1:
+        if telaEscolhida == 0:
             self.rotuloTitulo.setText("Ver Funcionários")
+            self.layoutCaixaDeConteudo.setCurrentIndex(0)
+            
+        if telaEscolhida == 1:
+            self.rotuloTitulo.setText("Inserir Funcionário")
+            self.layoutCaixaDeConteudo.setCurrentIndex(1)
             
         if telaEscolhida == 2:
-            self.rotuloTitulo.setText("Inserir Funcionário")
-            
-        if telaEscolhida == 3:
             self.rotuloTitulo.setText("Alterar Funcionário")
+            self.layoutCaixaDeConteudo.setCurrentIndex(2)
         
 def main():
     app = QApplication(sys.argv)
