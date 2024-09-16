@@ -16,9 +16,7 @@ class JanelaPrincipal (QMainWindow):
         self.layoutJanela.setContentsMargins(1,1,1,1)
         self.layoutJanela.setSpacing(1)
         
-        self.menuLateral = QWidget()
-        self.menuLateral.setStyleSheet("background-color: rgb(150,0,0);")
-        
+        self.menuLateral = self.criarMenuLateral()    
         self.layoutJanela.addWidget(self.menuLateral,1)    
         
         self.conteudoPrincipal = QWidget()
@@ -29,6 +27,46 @@ class JanelaPrincipal (QMainWindow):
         
         self.contentPane.setLayout(self.layoutJanela)
         self.setCentralWidget(self.contentPane)
+        
+    def criarMenuLateral(self):
+        menuLateral = QWidget()
+        menuLateral.setStyleSheet('''
+        QWidget{
+            background-color: rgb(120,0,0);
+            border: 3px solid black;}
+        QPushButton {
+            background-color: rgb(0,0,120);
+            color: white;
+            font: 16px;
+            }''')
+        
+        layoutMenuLateral = QVBoxLayout()
+        layoutMenuLateral.setContentsMargins(1,1,1,1)
+        layoutMenuLateral.setSpacing(1)
+        
+        botaoVerFuncionarios = QPushButton("Ver Funcionarios")
+        
+        layoutMenuLateral.addWidget(botaoVerFuncionarios)
+        
+        botaoInserirFuncionario = QPushButton("Inserir Funcionario")
+        
+        layoutMenuLateral.addWidget(botaoInserirFuncionario)
+        
+        botaoAlterarFuncionario = QPushButton("Alterar Funcionario")
+        
+        layoutMenuLateral.addWidget(botaoAlterarFuncionario)
+        
+        botaoRemoverFuncionario = QPushButton("Remover Funcionario")
+        
+        layoutMenuLateral.addWidget(botaoRemoverFuncionario)
+        
+        botaoSair = QPushButton("Sair")
+        
+        layoutMenuLateral.addWidget(botaoSair)
+        
+        menuLateral.setLayout(layoutMenuLateral)
+        
+        return menuLateral
 
         
         
