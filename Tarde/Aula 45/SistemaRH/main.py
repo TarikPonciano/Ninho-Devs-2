@@ -53,6 +53,15 @@ class JanelaPrincipal (QMainWindow):
             background-color:hsv(242, 57%, 71%);
             border-style: inset;
         }
+        QPushButton#Sair{
+            background-color: red;
+        }
+        QPushButton#Sair:hover{
+            background-color: rgb(120,0,0)
+        }
+        QPushButton#Sair:pressed{
+            background-color: rgb(150,0,0)
+        }
             ''')
         
         layoutMenuLateral = QVBoxLayout()
@@ -81,6 +90,7 @@ class JanelaPrincipal (QMainWindow):
         
         botaoSair = QPushButton("Sair")
         botaoSair.setSizePolicy(QSizePolicy.Policy.Expanding,QSizePolicy.Policy.Expanding)
+        botaoSair.setObjectName("Sair")
         
         layoutMenuLateral.addWidget(botaoSair)
         
