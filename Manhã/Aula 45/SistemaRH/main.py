@@ -30,8 +30,9 @@ class JanelaPrincipal(QMainWindow):
     def criarMenuLateral(self):
         menuLateral = QWidget()
         menuLateral.setStyleSheet('''QWidget {background-color:#1f2124; border:3px solid black;} 
-        QPushButton {background-color: #252680; color: white; border: 2px outset black; border-top-left-radius: 20px; border-bottom-left-radius: 20px; font: 16px;}
-        QPushButton:hover {background-color: #1d1e63;
+        QPushButton {background-color: #252680; color: white; border: 2px outset gray; border-top-left-radius: 20px; border-bottom-left-radius: 20px; font: 16px;}
+        QPushButton:hover {background-color: #1d1e63; 
+        border-style:inset;
         }
         QPushButton:pressed {background-color: #080bbf;}
         ''')
