@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TelaPrincipal</class>
+ <widget class="QWidget" name="TelaPrincipal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Sistema RH</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="accessories-text-editor"/>
+  </property>
+  <layout class="QHBoxLayout" name="layoutTelaPrincipal" stretch="1,3">
+   <property name="spacing">
+    <number>1</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="MenuLateral" native="true">
+     <property name="styleSheet">
+      <string notr="true">QWidget#MenuLateral {
+background-color: rgb(7, 8, 24);
+border: 3px solid rgb(0, 0, 0);
+}
+
+QPushButton{
+padding:  5px 3px 5px 3px;
+border: 2px outset rgb(116, 116, 116);
+background-color: #f0f0f0;
+border-radius: 5px;
+}
+
+QPushButton:hover{
+background-color: rgb(159, 159, 159)
+}
+
+QPushButton:pressed{
+background-color: #f2f2f2;
+border-style: inset;
+}</string>
+     </property>
+     <widget class="QPushButton" name="botaoVerFuncionarios">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>150</y>
+        <width>125</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Ver Funcionarios</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="botaoInserirFuncionarios">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>190</y>
+        <width>125</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Inserir Funcionario</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="botaoAlterarFuncionarios">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>230</y>
+        <width>125</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Alterar Funcionario</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="botaoRemoverFuncionarios">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>270</y>
+        <width>125</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Remover Funcionario</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="botaoSair">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>350</y>
+        <width>125</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Sair</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="logoMenuLateral">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>10</y>
+        <width>140</width>
+        <height>101</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;
+color: white;</string>
+      </property>
+      <property name="text">
+       <string>Sistema RH</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="CaixaConteudo" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
