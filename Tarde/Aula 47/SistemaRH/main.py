@@ -40,7 +40,7 @@ class JanelaPrincipal(QMainWindow):
         
         
         self.construtorTelaPrincipal.botaoVerFuncionarios.clicked.connect(self.exibirTelaVerFuncionarios)
-        
+        self.construtorTelaPrincipal.botaoSair.clicked.connect(lambda:self.close())
         self.setCentralWidget(self.telaPrincipal) 
         
     def exibirTelaVerFuncionarios(self):
